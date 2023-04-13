@@ -1,0 +1,2 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Thu Apr 13 08:57:45 GMT 2023","Thu Apr 13 08:57:45 GMT 2023","497","src.tests.system","test_conduit","TestConduit","","","test_login_pos",""
