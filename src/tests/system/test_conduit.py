@@ -14,3 +14,7 @@ class TestConduit:
     def test_login_pos(self):
         self.page.button_login().click()
         assert 7==7
+
+    def test_login_neg(self):
+        self.page.button_login().click()
+        assert 7==7
