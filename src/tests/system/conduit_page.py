@@ -7,7 +7,7 @@ from selenium.webdriver import Chrome
 
 class ConduitPage(GeneralPage):
     def __init__(self, browser: Chrome):
-        super().__init__(browser, 'localhost:1667')
+        super().__init__(browser, 'http://localhost:1667/')
 
     def button_login(self):
         return WebDriverWait(self.browser, 5).until(
