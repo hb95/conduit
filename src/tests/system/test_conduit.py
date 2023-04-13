@@ -1,17 +1,15 @@
-import time
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+from conduit_page import ConduitPage
+from configuration import set_chrome_driver
 
-service = Service(executable_path=ChromeDriverManager().install())
-options = Options()
-options.add_experimental_option("detach", True)
 
-browser = webdriver.Chrome(service=service, options=options)
+class TestConduit:
+    def setup_method(self):
+        self.page = ConduitPage(set_chrome_driver())
+        self.page.open()
 
-URL = "localhost:1667"
-browser.get(URL)
+    def teardown_method(self):
+        self.page.quit()
+
+    def test_login_pos(self):
+        self.page.button_login().click()
+        assert 7==7
