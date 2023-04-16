@@ -9,3 +9,4 @@ src/yarn.lock
 venv
 allure-results
 allure_reports
+src/tests/system/dummy.py
