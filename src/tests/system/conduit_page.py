@@ -33,3 +33,14 @@ class ConduitPage(GeneralPage):
     def button_signin_signup(self):
         return WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+
+    # def switch_to_alert(self):
+    #     WebDriverWait(self.browser, 5).until(EC.alert_is_present())
+    #     return self.browser.switch_to.alert
+
+    def message_reg_login(self):
+        return WebDriverWait(self.browser, 5).until(EC.text_to_be_present_in_element(
+            (By.XPATH, '//div[@class="swal-text"]'),
+            'Your registration was successful!'))
+        # return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located(
+        #     (By.XPATH, '//div[@class="swal-text"]')))
