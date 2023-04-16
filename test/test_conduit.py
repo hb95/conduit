@@ -4,7 +4,7 @@ import allure
 
 TEST_DATA_POS = {
     'username': 'albert08',
-    'email': 'almodo.albert@almodsz.com',
+    'email': 'almodo.albertin@almodom.com',
     'password': 'pontY738'
 }
 
@@ -24,42 +24,43 @@ class TestConduit:
         self.__variable = False
 
     def teardown_method(self):
-        self.page.quit()
-        #pass
+        # self.page.quit()
+        pass
 
     @allure.id('TC1')
     @allure.title('Regisztráció - Helyes felhasználói adatokkal')
     def test_registration_pos(self):
-        self.page.button_register().click()
+        self.page.link_register().click()
         self.page.input_username().send_keys(TEST_DATA_POS['username'])
         self.page.input_email().send_keys(TEST_DATA_POS['email'])
         self.page.input_password().send_keys(TEST_DATA_POS['password'])
         self.page.button_signin_signup().click()
-        assert self.page.message_reg_login()
+        assert self.page.message_reg_login('Your registration was successful!')
 
     @allure.id('TC2')
     @allure.title('Regisztráció - Helytelen felhasználói adatokkal')
     def test_registration_neg(self):
-        self.page.button_register().click()
+        self.page.link_register().click()
         self.page.input_username().send_keys(TEST_DATA_NEG['username'])
         self.page.input_email().send_keys(TEST_DATA_NEG['email'])
         self.page.input_password().send_keys(TEST_DATA_POS['password'])
         self.page.button_signin_signup().click()
+        assert self.page.message_reg_login('Email must be a valid email.')
 
     @allure.id('TC3')
     @allure.title('Bejelentkezés - Helyes felhasználói adatokkal')
     def test_login_pos(self):
-        self.page.button_login().click()
+        self.page.link_login().click()
         self.page.input_email().send_keys(TEST_DATA_POS['email'])
         self.page.input_password().send_keys(TEST_DATA_POS['password'])
         self.page.button_signin_signup().click()
-        assert 7 == 7
+        assert self.page.link_profile(TEST_DATA_POS['username'])
 
     @allure.id('TC4')
     @allure.title('Bejelentkezés - Helytelen felhasználói adatokkal')
     def test_login_neg(self):
-        self.page.button_login().click()
+        self.page.link_login().click()
         self.page.input_email().send_keys(TEST_DATA_NEG['email'])
         self.page.input_password().send_keys(TEST_DATA_POS['password'])
         self.page.button_signin_signup().click()
-        assert 7 == 7
+        assert self.page.message_reg_login('Email must be a valid email.')

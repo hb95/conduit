@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver import Chrome
+from selenium.common.exceptions import TimeoutException
 import time
 
 
@@ -10,11 +11,11 @@ class ConduitPage(GeneralPage):
     def __init__(self, browser: Chrome):
         super().__init__(browser, 'http://localhost:1667/')
 
-    def button_register(self):
+    def link_register(self):
         return WebDriverWait(self.browser, 5).until(
             EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[1]
 
-    def button_login(self):
+    def link_login(self):
         return WebDriverWait(self.browser, 5).until(
             EC.presence_of_all_elements_located((By.XPATH, '//a[@class="nav-link"]')))[0]
 
@@ -38,9 +39,16 @@ class ConduitPage(GeneralPage):
     #     WebDriverWait(self.browser, 5).until(EC.alert_is_present())
     #     return self.browser.switch_to.alert
 
-    def message_reg_login(self):
-        return WebDriverWait(self.browser, 5).until(EC.text_to_be_present_in_element(
-            (By.XPATH, '//div[@class="swal-text"]'),
-            'Your registration was successful!'))
-        # return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located(
-        #     (By.XPATH, '//div[@class="swal-text"]')))
+    def message_reg_login(self, expected_message):
+        try:
+            return WebDriverWait(self.browser, 5).until(
+                EC.text_to_be_present_in_element((By.XPATH, '//div[@class="swal-text"]'), expected_message))
+        except TimeoutException:
+            return None
+
+    def link_profile(self, username):
+        try:
+            return WebDriverWait(self.browser, 5).until(
+                EC.presence_of_element_located((By.XPATH, f'//a[@href="#/@{username}/"]')))
+        except TimeoutException:
+            return None
