@@ -7,3 +7,5 @@ src/deno_dir
 src/package-lock.json
 src/yarn.lock
 venv
+allure-results
+allure_reports
