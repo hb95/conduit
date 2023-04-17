@@ -3,13 +3,27 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver import Chrome
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import time
 
 
 class ConduitPage(GeneralPage):
     def __init__(self, browser: Chrome):
         super().__init__(browser, 'http://localhost:1667/')
+
+    def button_cookies_accept(self):
+        try:
+            return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located(
+                (By.XPATH, "//button[@class='cookie__bar__buttons__button cookie__bar__buttons__button--accept']")))
+        except:
+            return None
+
+    def button_cookies_decline(self):
+        try:
+            return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located(
+                (By.XPATH, "//button[@class='cookie__bar__buttons__button cookie__bar__buttons__button--decline']")))
+        except:
+            return None
 
     def link_register(self):
         return WebDriverWait(self.browser, 5).until(
