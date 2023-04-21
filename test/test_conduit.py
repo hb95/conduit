@@ -1,3 +1,5 @@
+import time
+
 from conduit_page import ConduitPage
 from configuration import set_chrome_driver_local, set_chrome_driver_remote
 import allure
@@ -16,7 +18,7 @@ TEST_DATA_NEG = {
 
 class TestConduit:
     def setup_method(self):
-        #self.page = ConduitPage(set_chrome_driver_local())
+        # self.page = ConduitPage(set_chrome_driver_local())
         self.page = ConduitPage(set_chrome_driver_remote())
         self.page.open()
         # self.page.maximize()
@@ -24,19 +26,21 @@ class TestConduit:
         self.__variable = False
 
     def teardown_method(self):
-        #self.page.quit()
+        # self.page.quit()
         pass
 
     @allure.id('TC1')
     @allure.title('Adatkezelési nyilatkozat elfogadása')
     def test_cookies_accept(self):
         self.page.button_cookies_accept().click()
+        time.sleep(1)
         assert self.page.button_cookies_accept() is None
 
     @allure.id('TC2')
     @allure.title('Adatkezelési nyilatkozat elutasítása')
     def test_cookies_decline(self):
         self.page.button_cookies_decline().click()
+        time.sleep(1)
         assert self.page.button_cookies_decline() is None
 
     @allure.id('TC3')
@@ -81,3 +85,4 @@ class TestConduit:
     @allure.title('Kijelentkezés')
     def test_logout(self):
         pass
+        # x("//a[@class='nav-link', @active-class='active']")
