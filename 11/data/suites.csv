@@ -1,8 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Fri Apr 21 00:09:40 GMT 2023","Fri Apr 21 00:09:40 GMT 2023","267","test","test_conduit","TestConduit","","","Bejelentkezés - Helytelen felhasználói adatokkal",""
-"passed","Fri Apr 21 00:09:19 GMT 2023","Fri Apr 21 00:09:25 GMT 2023","6185","test","test_conduit","TestConduit","","","Adatkezelési nyilatkozat elfogadása",""
-"passed","Fri Apr 21 00:09:38 GMT 2023","Fri Apr 21 00:09:39 GMT 2023","782","test","test_conduit","TestConduit","","","Bejelentkezés - Helyes felhasználói adatokkal",""
-"passed","Fri Apr 21 00:09:33 GMT 2023","Fri Apr 21 00:09:36 GMT 2023","2436","test","test_conduit","TestConduit","","","Regisztráció - Helyes felhasználói adatokkal",""
-"passed","Fri Apr 21 00:09:26 GMT 2023","Fri Apr 21 00:09:32 GMT 2023","6137","test","test_conduit","TestConduit","","","Adatkezelési nyilatkozat elutasítása",""
-"passed","Fri Apr 21 00:09:41 GMT 2023","Fri Apr 21 00:09:41 GMT 2023","0","test","test_conduit","TestConduit","","","Kijelentkezés",""
-"passed","Fri Apr 21 00:09:37 GMT 2023","Fri Apr 21 00:09:38 GMT 2023","811","test","test_conduit","TestConduit","","","Regisztráció - Helytelen felhasználói adatokkal",""
