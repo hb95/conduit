@@ -18,8 +18,8 @@ TEST_DATA_NEG = {
 
 class TestConduit:
     def setup_method(self):
-        self.page = ConduitPage(set_chrome_driver_local())
-        # self.page = ConduitPage(set_chrome_driver_remote())
+        # self.page = ConduitPage(set_chrome_driver_local())
+        self.page = ConduitPage(set_chrome_driver_remote())
         self.page.open()
         # self.page.maximize()
         self._data = True
