@@ -73,3 +73,18 @@ class ConduitPage(GeneralPage):
                 EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link"]/i[@class="ion-android-exit"]')))
         except TimeoutException:
             return None
+
+    def link_yourfeed(self):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//a[@href="#/my-feed"]')))
+
+    def links_author(self):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_all_elements_located((By.XPATH, '//a[@class="author"]')))
+
+    def links_pages(self):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_all_elements_located((By.XPATH, '//ul[@class="pagination"]/li/a')))
+
+    def link_active_page(self):
+        return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//li[@class="page-item active"]/a')))

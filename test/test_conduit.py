@@ -83,10 +83,31 @@ class TestConduit:
 
     @allure.id('TC7')
     @allure.title('Kijelentkezés')
-    def test_logout(self):
+    def test_logout_pos(self):
         self.test_login_pos()
         self.page.link_logout().click()
         assert self.page.link_logout() is None
+
+    @allure.id('TC8')
+    @allure.title('Posztok listázása')
+    def test_list_pos(self):
+        self.test_login_pos()
+        self.page.link_yourfeed().click()
+        list_post_authors = self.page.link_author()
+        assert len(list_post_authors) > 0
+
+    @allure.id('TC9')
+    @allure.title('Több oldalas lista bejárása')
+    def test_list_multipage_pos(self):
+        self.test_login_pos()
+        list_pages = self.page.links_pages()
+
+        for i, page in enumerate(list_pages):
+            page.click()
+            assert self.page.link_active_page().text == str(i+1)
+
+
+
 
 
 
