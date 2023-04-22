@@ -18,8 +18,8 @@ TEST_DATA_NEG = {
 
 class TestConduit:
     def setup_method(self):
-        # self.page = ConduitPage(set_chrome_driver_local())
-        self.page = ConduitPage(set_chrome_driver_remote())
+        self.page = ConduitPage(set_chrome_driver_local())
+        # self.page = ConduitPage(set_chrome_driver_remote())
         self.page.open()
         # self.page.maximize()
         self._data = True
@@ -84,5 +84,9 @@ class TestConduit:
     @allure.id('TC7')
     @allure.title('Kijelentkezés')
     def test_logout(self):
-        pass
-        # x("//a[@class='nav-link', @active-class='active']")
+        self.test_login_pos()
+        self.page.link_logout().click()
+        assert self.page.link_logout() is None
+
+
+

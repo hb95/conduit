@@ -66,3 +66,10 @@ class ConduitPage(GeneralPage):
                 EC.presence_of_element_located((By.XPATH, f'//a[@href="#/@{username}/"]')))
         except TimeoutException:
             return None
+
+    def link_logout(self):
+        try:
+            return WebDriverWait(self.browser, 5).until(
+                EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link"]/i[@class="ion-android-exit"]')))
+        except TimeoutException:
+            return None
