@@ -122,3 +122,26 @@ class ConduitPage(GeneralPage):
                 EC.presence_of_element_located((By.XPATH, f'//p[text()="{text}"]')))
         except TimeoutException:
             return None
+
+    def p_comment(self):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//p[@class="card-text"]')))
+
+    def i_trash_comment(self):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
+
+    def link_settings(self):
+        return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, 'a[@href="#/settings"]')))
+
+    def input_username_setting(self):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Your username"]')))
+
+    def button_update_settings(self):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+
+    def button_confirm(self):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))

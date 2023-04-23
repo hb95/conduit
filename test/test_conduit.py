@@ -28,15 +28,15 @@ A"""
 
 class TestConduit:
     def setup_method(self):
-        # self.page = ConduitPage(set_chrome_driver_local())
-        self.page = ConduitPage(set_chrome_driver_remote())
+        self.page = ConduitPage(set_chrome_driver_local())
+        # self.page = ConduitPage(set_chrome_driver_remote())
         self.page.open()
         # self.page.maximize()
         self._data = True
         self.__variable = False
 
     def teardown_method(self):
-        #self.page.quit()
+        # self.page.quit()
         pass
 
     @allure.id('TC1')
@@ -152,3 +152,27 @@ A vödör tartalmát folyamatosan lehet feltölteni, ahogyan teremnek a kertben 
             self.page.textarea_comment().send_keys(line)
             self.page.button_post_comment().click()
             assert self.page.p_given_text(line)
+
+    @allure.id('TC12')
+    @allure.title('Komment törlése')
+    def test_delete_comment(self):
+        self.test_login_pos()
+        self.page.links_posts()[0].click()
+
+        # első komment szövegének kinyerése
+        comment_text = self.page.p_comment().text
+        # első komment törlése
+        self.page.i_trash_comment().click()
+        # ellenőrzés, hogy tényleg eltűnt-e a komment
+        assert self.page.p_given_text(comment_text) is None
+
+    @allure.id('TC13')
+    @allure.title('Felhasználónév módosítása')
+    def test_edit_username(self):
+        self.page.link_settings().click()
+        username_field = self.page.input_username_setting()\
+        username_field.clear()
+        username_field.send_keys('KossuthLajos')
+        self.page.button_update_settings().click()
+        self.page.button_confirm().click()
+
