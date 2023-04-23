@@ -7,7 +7,7 @@ from selenium.webdriver.common.keys import Keys
 
 TEST_DATA_REG_POS = {
     'username': 'albert08',
-    'email': 'almodo.albert@albert.en',
+    'email': 'almodo.albert@albert.gb',
     'password': 'pontY738'
 }
 
