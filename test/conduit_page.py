@@ -87,4 +87,19 @@ class ConduitPage(GeneralPage):
             EC.presence_of_all_elements_located((By.XPATH, '//ul[@class="pagination"]/li/a')))
 
     def link_active_page(self):
-        return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//li[@class="page-item active"]/a')))
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//li[@class="page-item active"]/a')))
+
+    def link_new_post(self):
+        return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
+
+    def input_given_placeholder(self, phtext):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, f'//input[@placeholder="{phtext}]')))
+
+    def textarea_post(self):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, f'//textarea[@placeholder="Write your article (in markdown)"]')))
+
+    def button_submit_post(self):
+        return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@type="submit"]')))

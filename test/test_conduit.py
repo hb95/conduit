@@ -26,8 +26,8 @@ class TestConduit:
         self.__variable = False
 
     def teardown_method(self):
-        # self.page.quit()
-        pass
+        self.page.quit()
+        # pass
 
     @allure.id('TC1')
     @allure.title('Adatkezelési nyilatkozat elfogadása')
@@ -93,7 +93,7 @@ class TestConduit:
     def test_list_pos(self):
         self.test_login_pos()
         self.page.link_yourfeed().click()
-        list_post_authors = self.page.link_author()
+        list_post_authors = self.page.links_author()
         assert len(list_post_authors) > 0
 
     @allure.id('TC9')
@@ -104,10 +104,23 @@ class TestConduit:
 
         for i, page in enumerate(list_pages):
             page.click()
-            assert self.page.link_active_page().text == str(i+1)
+            assert self.page.link_active_page().text == str(i + 1)
 
+    @allure.id('TC10')
+    @allure.title('Új poszt közzététele')
+    def test_post_new(self):
+        self.test_login_pos()
+        self.page.link_new_post().click()
+        title = self.page.input_given_placeholder('Article Title')
+        topic = self.page.input_given_placeholder("What's this article about?")
+        tags = self.page.input_given_placeholder('Enter tags')
+        article = self.page.textarea_post()
 
+        title.send_keys('Csodálatos!')
+        topic.send_keys('Hogy készítsünk tökéletes csalamádét?')
+        tags.send_keys('savanyúság')
+        article.send_keys("""A borkénport és a nátrium benzoátot kevés vízben feloldjuk, majd hozzáöntjük a többi vízhez és az egészet beleöntjük a vödörbe. Hozzáadjuk a cukrot, a sót, az ecetet és a fűszereket, a tormát, a kaprot, a babérlevelet, az egész borsot, a borókabogyót, a mustármagot és a koriandert.
+A vödrös (bedobálós) savanyúsághoz zöldségeket - ami bármi lehet: uborka, almapaprika, TV paprika kicsumázva, félbevágva, picike zöld dinnye, karfiol, gyöngyhagyma stb. - alaposan megmossuk, átvizsgáljuk, hogy nem hibásak-e. Beledobáljuk a lébe, majd a tetejét tányérral lezárjuk, hogy a zöldségeket leszorítsuk a lébe, végül lezárjuk a vödör tetejét.
+A vödör tartalmát folyamatosan lehet feltölteni, ahogyan teremnek a kertben a zöldségek, vagy ahogyan hozzájutunk egyéb beszerzési forrásból. Kb. 8 nap múlva lesz fogyasztható az eltett savanyúság. """)
 
-
-
-
+        self.page.button_submit_post()
