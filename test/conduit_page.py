@@ -78,9 +78,9 @@ class ConduitPage(GeneralPage):
         return WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/my-feed"]')))
 
-    def links_author(self):
+    def links_posts(self):
         return WebDriverWait(self.browser, 5).until(
-            EC.presence_of_all_elements_located((By.XPATH, '//a[@class="author"]')))
+            EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]')))
 
     def links_pages(self):
         return WebDriverWait(self.browser, 5).until(
@@ -95,11 +95,29 @@ class ConduitPage(GeneralPage):
 
     def input_given_placeholder(self, phtext):
         return WebDriverWait(self.browser, 5).until(
-            EC.presence_of_element_located((By.XPATH, f'//input[@placeholder="{phtext}]')))
+            EC.presence_of_element_located((By.XPATH, f'//input[@placeholder="{phtext}"]')))
 
     def textarea_post(self):
         return WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, f'//textarea[@placeholder="Write your article (in markdown)"]')))
 
     def button_submit_post(self):
-        return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@type="submit"]')))
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//button[@type="submit"]')))
+
+    def h1(self):
+        return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//h1')))
+
+    def button_post_comment(self):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-sm btn-primary"]')))
+
+    def textarea_comment(self):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//textarea[@placeholder="Write a comment..."]')))
+
+    def p_given_text(self, text):
+        try:
+            return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, f'//p[text()={text}]')))
+        except TimeoutException:
+            return None
