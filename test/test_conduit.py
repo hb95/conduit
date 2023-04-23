@@ -28,15 +28,15 @@ A"""
 
 class TestConduit:
     def setup_method(self):
-        self.page = ConduitPage(set_chrome_driver_local())
-        # self.page = ConduitPage(set_chrome_driver_remote())
+        # self.page = ConduitPage(set_chrome_driver_local())
+        self.page = ConduitPage(set_chrome_driver_remote())
         self.page.open()
         # self.page.maximize()
         self._data = True
         self.__variable = False
 
     def teardown_method(self):
-        # self.page.quit()
+        #self.page.quit()
         pass
 
     @allure.id('TC1')

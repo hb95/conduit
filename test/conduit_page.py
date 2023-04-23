@@ -118,6 +118,7 @@ class ConduitPage(GeneralPage):
 
     def p_given_text(self, text):
         try:
-            return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, f'//p[text()={text}]')))
+            return WebDriverWait(self.browser, 5).until(
+                EC.presence_of_element_located((By.XPATH, f'//p[text()="{text}"]')))
         except TimeoutException:
             return None
