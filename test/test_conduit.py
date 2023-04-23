@@ -7,13 +7,14 @@ from selenium.webdriver.common.keys import Keys
 
 TEST_DATA_REG_POS = {
     'username': 'albert08',
-    'email': 'almodo.albertina@alma.com',
+    'email': 'almodo.albert@albert.com',
     'password': 'pontY738'
 }
 
 TEST_DATA_REG_NEG = {
     'username': 'joe',
-    'email': 'almodo.albert'
+    'email': 'almodo.albert',
+    'password': 'pontY738'
 }
 
 TEST_DATA_POST_POS = {
@@ -69,7 +70,7 @@ class TestConduit:
         self.page.link_register().click()
         self.page.input_username().send_keys(TEST_DATA_REG_NEG['username'])
         self.page.input_email().send_keys(TEST_DATA_REG_NEG['email'])
-        self.page.input_password().send_keys(TEST_DATA_REG_POS['password'])
+        self.page.input_password().send_keys(TEST_DATA_REG_NEG['password'])
         self.page.button_signin_signup().click()
         assert self.page.message_reg_login('Email must be a valid email.')
 
@@ -87,7 +88,7 @@ class TestConduit:
     def test_login_neg(self):
         self.page.link_login().click()
         self.page.input_email().send_keys(TEST_DATA_REG_NEG['email'])
-        self.page.input_password().send_keys(TEST_DATA_REG_POS['password'])
+        self.page.input_password().send_keys(TEST_DATA_REG_NEG['password'])
         self.page.button_signin_signup().click()
         assert self.page.message_reg_login('Email must be a valid email.')
 
@@ -145,7 +146,7 @@ A vödör tartalmát folyamatosan lehet feltölteni, ahogyan teremnek a kertben 
         self.test_login_pos()
         self.page.links_posts()[0].click()
 
-        with open('poem.txt', 'r', encoding='UTF-8') as comment_file:
+        with open('test/poem.txt', 'r', encoding='UTF-8') as comment_file:
             comments = comment_file.readlines()
 
         for line in comments:
