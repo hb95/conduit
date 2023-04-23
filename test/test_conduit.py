@@ -31,7 +31,7 @@ class TestConduit:
         self.page = ConduitPage(set_chrome_driver_local())
         # self.page = ConduitPage(set_chrome_driver_remote())
         self.page.open()
-        # self.page.maximize()
+        self.page.maximize()
         self._data = True
         self.__variable = False
 
@@ -169,10 +169,26 @@ A vödör tartalmát folyamatosan lehet feltölteni, ahogyan teremnek a kertben 
     @allure.id('TC13')
     @allure.title('Felhasználónév módosítása')
     def test_edit_username(self):
+        self.test_login_pos()
         self.page.link_settings().click()
-        username_field = self.page.input_username_setting()\
+        username_field = self.page.input_username_setting()
         username_field.clear()
         username_field.send_keys('KossuthLajos')
         self.page.button_update_settings().click()
         self.page.button_confirm().click()
+        assert self.page.link_profile('KossuthLajos')
 
+    @allure.id('TC14')
+    @allure.title('Adatok exportálása')
+    def test_export_titles(self):
+        self.test_login_pos()
+        titles = [element.text for element in self.page.h1_post_titles()]
+
+        with open('post_titles.txt', 'a', encoding='UTF-8') as titles_file:
+            for title in titles:
+                titles_file.write(title + '\n')
+
+        with open('post_titles.txt', 'r', encoding='UTF-8') as titles_file:
+            titles_read = titles_file.readlines()
+
+        assert titles_read[0][:-1] == titles[0]

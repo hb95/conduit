@@ -132,7 +132,8 @@ class ConduitPage(GeneralPage):
             EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
 
     def link_settings(self):
-        return WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, 'a[@href="#/settings"]')))
+        return WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, 'a[href="#/settings"]')))
 
     def input_username_setting(self):
         return WebDriverWait(self.browser, 5).until(
@@ -145,3 +146,7 @@ class ConduitPage(GeneralPage):
     def button_confirm(self):
         return WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class="swal-button swal-button--confirm"]')))
+
+    def h1_post_titles(self):
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]/h1')))
