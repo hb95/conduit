@@ -94,8 +94,9 @@ class TestConduit:
     @allure.title('Bejelentkezés - Helyes felhasználói adatokkal')
     def test_login_pos(self):
         self.registration(TEST_DATA_REGANDLOGIN_POS)
-        time.sleep(1)
-        self.page.button_confirm().click()
+        #time.sleep(1)
+        #self.page.button_confirm().click()
+        self.page.refresh()
         self.login(TEST_DATA_REGANDLOGIN_POS)
         assert self.page.link_profile(TEST_DATA_REGANDLOGIN_POS['username'])
 
