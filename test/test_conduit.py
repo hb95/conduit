@@ -35,7 +35,7 @@ A"""
 
 class TestConduit:
     def setup_method(self):
-        # self.page = ConduitPage(set_chrome_driver_local())
+        #self.page = ConduitPage(set_chrome_driver_local())
         self.page = ConduitPage(set_chrome_driver_remote())
         self.page.open()
         self.page.maximize()
@@ -44,7 +44,7 @@ class TestConduit:
 
     def teardown_method(self):
         self.page.quit()
-        # pass
+        #pass
 
     # segédfüggvény: regisztráció dictionary-ben megadott tetszőleges adatokkal
     def registration(self, user_data):
@@ -94,9 +94,9 @@ class TestConduit:
     @allure.title('Bejelentkezés - Helyes felhasználói adatokkal')
     def test_login_pos(self):
         self.registration(TEST_DATA_REGANDLOGIN_POS)
-        #time.sleep(1)
-        #self.page.button_confirm().click()
-        self.page.refresh()
+        time.sleep(1)
+        self.page.button_confirm().click()
+        time.sleep(1)
         self.login(TEST_DATA_REGANDLOGIN_POS)
         assert self.page.link_profile(TEST_DATA_REGANDLOGIN_POS['username'])
 
