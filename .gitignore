@@ -12,3 +12,4 @@ allure_reports
 src/tests/system/dummy.py
 __pycache__
 test/post_titles.txt
+src/tests/system/post_titles.txt
