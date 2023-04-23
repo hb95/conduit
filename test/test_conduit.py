@@ -7,7 +7,7 @@ from selenium.webdriver.common.keys import Keys
 
 TEST_DATA_REG_POS = {
     'username': 'albert08',
-    'email': 'almodo.albertina@almodom.com',
+    'email': 'almodo.albertina@almodsz.com',
     'password': 'pontY738'
 }
 
@@ -28,16 +28,16 @@ A"""
 
 class TestConduit:
     def setup_method(self):
-        self.page = ConduitPage(set_chrome_driver_local())
-        # self.page = ConduitPage(set_chrome_driver_remote())
+        # self.page = ConduitPage(set_chrome_driver_local())
+        self.page = ConduitPage(set_chrome_driver_remote())
         self.page.open()
         self.page.maximize()
         self._data = True
         self.__variable = False
 
     def teardown_method(self):
-        # self.page.quit()
-        pass
+        self.page.quit()
+        # pass
 
     @allure.id('TC1')
     @allure.title('Adatkezelési nyilatkozat elfogadása')
@@ -184,7 +184,7 @@ A vödör tartalmát folyamatosan lehet feltölteni, ahogyan teremnek a kertben 
         self.test_login_pos()
         titles = [element.text for element in self.page.h1_post_titles()]
 
-        with open('post_titles.txt', 'a', encoding='UTF-8') as titles_file:
+        with open('post_titles.txt', 'w', encoding='UTF-8') as titles_file:
             for title in titles:
                 titles_file.write(title + '\n')
 
