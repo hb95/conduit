@@ -7,7 +7,13 @@ from selenium.webdriver.common.keys import Keys
 
 TEST_DATA_REG_POS = {
     'username': 'albert08',
-    'email': 'almodo.albert@albert.com',
+    'email': 'almodo.albert@albert.en',
+    'password': 'pontY738'
+}
+
+TEST_DATA_REGANDLOGIN_POS = {
+    'username': 'albert08',
+    'email': 'almodo.albert@albert.hr',
     'password': 'pontY738'
 }
 
@@ -40,6 +46,20 @@ class TestConduit:
         self.page.quit()
         # pass
 
+    # segédfüggvény: regisztráció dictionary-ben megadott tetszőleges adatokkal
+    def registration(self, user_data):
+        self.page.link_register().click()
+        self.page.input_username().send_keys(user_data['username'])
+        self.page.input_email().send_keys(user_data['email'])
+        self.page.input_password().send_keys(user_data['password'])
+        self.page.button_signin_signup().click()
+
+    def login(self, user_data):
+        self.page.link_login().click()
+        self.page.input_email().send_keys(user_data['email'])
+        self.page.input_password().send_keys(user_data['password'])
+        self.page.button_signin_signup().click()
+
     @allure.id('TC1')
     @allure.title('Adatkezelési nyilatkozat elfogadása')
     def test_cookies_accept(self):
@@ -57,11 +77,7 @@ class TestConduit:
     @allure.id('TC3')
     @allure.title('Regisztráció - Helyes felhasználói adatokkal')
     def test_registration_pos(self):
-        self.page.link_register().click()
-        self.page.input_username().send_keys(TEST_DATA_REG_POS['username'])
-        self.page.input_email().send_keys(TEST_DATA_REG_POS['email'])
-        self.page.input_password().send_keys(TEST_DATA_REG_POS['password'])
-        self.page.button_signin_signup().click()
+        self.registration(TEST_DATA_REG_POS)
         assert self.page.message_reg_login('Your registration was successful!')
 
     @allure.id('TC4')
@@ -77,11 +93,11 @@ class TestConduit:
     @allure.id('TC5')
     @allure.title('Bejelentkezés - Helyes felhasználói adatokkal')
     def test_login_pos(self):
-        self.page.link_login().click()
-        self.page.input_email().send_keys(TEST_DATA_REG_POS['email'])
-        self.page.input_password().send_keys(TEST_DATA_REG_POS['password'])
-        self.page.button_signin_signup().click()
-        assert self.page.link_profile(TEST_DATA_REG_POS['username'])
+        self.registration(TEST_DATA_REGANDLOGIN_POS)
+        time.sleep(1)
+        self.page.button_confirm().click()
+        self.login(TEST_DATA_REGANDLOGIN_POS)
+        assert self.page.link_profile(TEST_DATA_REGANDLOGIN_POS['username'])
 
     @allure.id('TC6')
     @allure.title('Bejelentkezés - Helytelen felhasználói adatokkal')
@@ -95,14 +111,14 @@ class TestConduit:
     @allure.id('TC7')
     @allure.title('Kijelentkezés')
     def test_logout_pos(self):
-        self.test_login_pos()
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.link_logout().click()
         assert self.page.link_logout() is None
 
     @allure.id('TC8')
     @allure.title('Posztok listázása')
     def test_list_pos(self):
-        self.test_login_pos()
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.link_yourfeed().click()
         list_posts = self.page.links_posts()
         assert len(list_posts) > 0
@@ -110,7 +126,7 @@ class TestConduit:
     @allure.id('TC9')
     @allure.title('Több oldalas lista bejárása')
     def test_list_multipage_pos(self):
-        self.test_login_pos()
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         list_pages = self.page.links_pages()
 
         for i, page in enumerate(list_pages):
@@ -120,7 +136,7 @@ class TestConduit:
     @allure.id('TC10')
     @allure.title('Új poszt közzététele')
     def test_post_new(self):
-        self.test_login_pos()
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.link_new_post().click()
         title = self.page.input_given_placeholder('Article Title')
         topic = self.page.input_given_placeholder("What's this article about?")
@@ -143,7 +159,7 @@ A vödör tartalmát folyamatosan lehet feltölteni, ahogyan teremnek a kertben 
     @allure.id('TC11')
     @allure.title('Kommentelés sorozatos adatbeolvasással')
     def test_comments_from_file(self):
-        self.test_login_pos()
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.links_posts()[0].click()
 
         with open('test/poem.txt', 'r', encoding='UTF-8') as comment_file:
@@ -157,7 +173,7 @@ A vödör tartalmát folyamatosan lehet feltölteni, ahogyan teremnek a kertben 
     @allure.id('TC12')
     @allure.title('Komment törlése')
     def test_delete_comment(self):
-        self.test_login_pos()
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.links_posts()[0].click()
 
         # első komment szövegének kinyerése
@@ -170,7 +186,7 @@ A vödör tartalmát folyamatosan lehet feltölteni, ahogyan teremnek a kertben 
     @allure.id('TC13')
     @allure.title('Felhasználónév módosítása')
     def test_edit_username(self):
-        self.test_login_pos()
+        self.login(TEST_DATA_REG_POS)
         self.page.link_settings().click()
         username_field = self.page.input_username_setting()
         username_field.clear()
@@ -182,7 +198,7 @@ A vödör tartalmát folyamatosan lehet feltölteni, ahogyan teremnek a kertben 
     @allure.id('TC14')
     @allure.title('Adatok exportálása')
     def test_export_titles(self):
-        self.test_login_pos()
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         titles = [element.text for element in self.page.h1_post_titles()]
 
         with open('post_titles.txt', 'w', encoding='UTF-8') as titles_file:
