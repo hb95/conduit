@@ -1,50 +1,21 @@
 import time
 
+from data import *
 from conduit_page import ConduitPage
 from configuration import set_chrome_driver_local, set_chrome_driver_remote
 import allure
 from selenium.webdriver.common.keys import Keys
 
-TEST_DATA_REG_POS = {
-    'username': 'albert08',
-    'email': 'almodo.albert@albert.gb',
-    'password': 'pontY738'
-}
-
-TEST_DATA_REGANDLOGIN_POS = {
-    'username': 'albert08',
-    'email': 'almodo.albert@albert.hr',
-    'password': 'pontY738'
-}
-
-TEST_DATA_REG_NEG = {
-    'username': 'joe',
-    'email': 'almodo.albert',
-    'password': 'pontY738'
-}
-
-TEST_DATA_POST_POS = {
-    'title': 'Csalamádé',
-    'topic': 'Hogy készítsünk tökéletes csalamádét?',
-    'tags': ['savanyúság', 'csalamádé'],
-    'article': """A borkénport és a nátrium benzoátot kevés vízben feloldjuk, majd hozzáöntjük a többi vízhez és az egészet beleöntjük a vödörbe. Hozzáadjuk a cukrot, a sót, az ecetet és a fűszereket, a tormát, a kaprot, a babérlevelet, az egész borsot, a borókabogyót, a mustármagot és a koriandert.
-A vödrös (bedobálós) savanyúsághoz zöldségeket - ami bármi lehet: uborka, almapaprika, TV paprika kicsumázva, félbevágva, picike zöld dinnye, karfiol, gyöngyhagyma stb. - alaposan megmossuk, átvizsgáljuk, hogy nem hibásak-e. Beledobáljuk a lébe, majd a tetejét tányérral lezárjuk, hogy a zöldségeket leszorítsuk a lébe, végül lezárjuk a vödör tetejét.
-A"""
-}
-
 
 class TestConduit:
     def setup_method(self):
-        #self.page = ConduitPage(set_chrome_driver_local())
+        # self.page = ConduitPage(set_chrome_driver_local())
         self.page = ConduitPage(set_chrome_driver_remote())
         self.page.open()
         self.page.maximize()
-        self._data = True
-        self.__variable = False
 
     def teardown_method(self):
         self.page.quit()
-        #pass
 
     # segédfüggvény: regisztráció dictionary-ben megadott tetszőleges adatokkal
     def registration(self, user_data):
@@ -83,11 +54,7 @@ class TestConduit:
     @allure.id('TC4')
     @allure.title('Regisztráció - Helytelen felhasználói adatokkal')
     def test_registration_neg(self):
-        self.page.link_register().click()
-        self.page.input_username().send_keys(TEST_DATA_REG_NEG['username'])
-        self.page.input_email().send_keys(TEST_DATA_REG_NEG['email'])
-        self.page.input_password().send_keys(TEST_DATA_REG_NEG['password'])
-        self.page.button_signin_signup().click()
+        self.registration(TEST_DATA_REGANDLOGIN_NEG)
         assert self.page.message_reg_login('Email must be a valid email.')
 
     @allure.id('TC5')
@@ -103,22 +70,19 @@ class TestConduit:
     @allure.id('TC6')
     @allure.title('Bejelentkezés - Helytelen felhasználói adatokkal')
     def test_login_neg(self):
-        self.page.link_login().click()
-        self.page.input_email().send_keys(TEST_DATA_REG_NEG['email'])
-        self.page.input_password().send_keys(TEST_DATA_REG_NEG['password'])
-        self.page.button_signin_signup().click()
+        self.login(TEST_DATA_REGANDLOGIN_NEG)
         assert self.page.message_reg_login('Email must be a valid email.')
 
     @allure.id('TC7')
     @allure.title('Kijelentkezés')
-    def test_logout_pos(self):
+    def test_logout(self):
         self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.link_logout().click()
         assert self.page.link_logout() is None
 
     @allure.id('TC8')
     @allure.title('Posztok listázása')
-    def test_list_pos(self):
+    def test_list(self):
         self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.link_yourfeed().click()
         list_posts = self.page.links_posts()
@@ -126,7 +90,7 @@ class TestConduit:
 
     @allure.id('TC9')
     @allure.title('Több oldalas lista bejárása')
-    def test_list_multipage_pos(self):
+    def test_list_multipage(self):
         self.login(TEST_DATA_REGANDLOGIN_POS)
         list_pages = self.page.links_pages()
 
@@ -144,18 +108,16 @@ class TestConduit:
         tags = self.page.input_given_placeholder('Enter tags')
         article = self.page.textarea_post()
 
-        title.send_keys(TEST_DATA_POST_POS['title'])
-        topic.send_keys(TEST_DATA_POST_POS['topic'])
-        for word in TEST_DATA_POST_POS['tags']:
+        title.send_keys(TEST_DATA_POST['title'])
+        topic.send_keys(TEST_DATA_POST['topic'])
+        for word in TEST_DATA_POST['tags']:
             tags.send_keys(word)
             tags.send_keys(Keys.ENTER)
-        article.send_keys("""A borkénport és a nátrium benzoátot kevés vízben feloldjuk, majd hozzáöntjük a többi vízhez és az egészet beleöntjük a vödörbe. Hozzáadjuk a cukrot, a sót, az ecetet és a fűszereket, a tormát, a kaprot, a babérlevelet, az egész borsot, a borókabogyót, a mustármagot és a koriandert.
-A vödrös (bedobálós) savanyúsághoz zöldségeket - ami bármi lehet: uborka, almapaprika, TV paprika kicsumázva, félbevágva, picike zöld dinnye, karfiol, gyöngyhagyma stb. - alaposan megmossuk, átvizsgáljuk, hogy nem hibásak-e. Beledobáljuk a lébe, majd a tetejét tányérral lezárjuk, hogy a zöldségeket leszorítsuk a lébe, végül lezárjuk a vödör tetejét.
-A vödör tartalmát folyamatosan lehet feltölteni, ahogyan teremnek a kertben a zöldségek, vagy ahogyan hozzájutunk egyéb beszerzési forrásból. Kb. 8 nap múlva lesz fogyasztható az eltett savanyúság. """)
+        article.send_keys(TEST_DATA_POST['article'])
 
         self.page.button_submit_post().click()
 
-        assert self.page.h1().text == TEST_DATA_POST_POS['title']
+        assert self.page.h1().text == TEST_DATA_POST['title']
 
     @allure.id('TC11')
     @allure.title('Kommentelés sorozatos adatbeolvasással')

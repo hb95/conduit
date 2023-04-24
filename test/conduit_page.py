@@ -3,8 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver import Chrome
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
-import time
+from selenium.common.exceptions import TimeoutException
 
 
 class ConduitPage(GeneralPage):
@@ -30,8 +29,9 @@ class ConduitPage(GeneralPage):
             EC.presence_of_element_located((By.XPATH, '//li[@class="nav-item"]/a[@href="#/register"]')))
 
     def link_login(self):
-        return WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located((By.XPATH, '//li[@class="nav-item"]/a[@href="#/login"]')))
+        return WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located(
+                (By.XPATH, '//li[@class="nav-item"]/a[@href="#/login"]/i[@class="ion-compose"]')))
 
     def input_username(self):
         return WebDriverWait(self.browser, 5).until(
@@ -48,10 +48,6 @@ class ConduitPage(GeneralPage):
     def button_signin_signup(self):
         return WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
-
-    # def switch_to_alert(self):
-    #     WebDriverWait(self.browser, 5).until(EC.alert_is_present())
-    #     return self.browser.switch_to.alert
 
     def message_reg_login(self, expected_message):
         try:
