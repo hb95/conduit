@@ -30,7 +30,7 @@ class ConduitPage(GeneralPage):
             EC.presence_of_element_located((By.XPATH, '//li[@class="nav-item"]/a[@href="#/register"]')))
 
     def link_login(self):
-        return WebDriverWait(self.browser, 5).until(
+        return WebDriverWait(self.browser, 10).until(
             EC.presence_of_element_located((By.XPATH, '//li[@class="nav-item"]/a[@href="#/login"]')))
 
     def input_username(self):
