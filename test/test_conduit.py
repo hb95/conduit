@@ -2,15 +2,15 @@ import time
 
 from data import *
 from conduit_page import ConduitPage
-from configuration import set_chrome_driver_local, set_chrome_driver_remote
+from configuration import set_chrome_driver_in_window, set_chrome_driver_headless
 import allure
 from selenium.webdriver.common.keys import Keys
 
 
 class TestConduit:
     def setup_method(self):
-        # self.page = ConduitPage(set_chrome_driver_local())
-        self.page = ConduitPage(set_chrome_driver_remote())
+        # self.page = ConduitPage(set_chrome_driver_in_window())
+        self.page = ConduitPage(set_chrome_driver_headless())
         self.page.open()
         self.page.maximize()
 

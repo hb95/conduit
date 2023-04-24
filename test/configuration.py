@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
 
-def set_chrome_driver_local() -> webdriver.Chrome:
+def set_chrome_driver_in_window() -> webdriver.Chrome:
     service = Service(executable_path=ChromeDriverManager().install())
     options = Options()
     options.add_experimental_option('detach', True)
@@ -12,7 +12,7 @@ def set_chrome_driver_local() -> webdriver.Chrome:
     return webdriver.Chrome(service=service, options=options)
 
 
-def set_chrome_driver_remote() -> webdriver.Chrome:
+def set_chrome_driver_headless() -> webdriver.Chrome:
     service = Service(executable_path=ChromeDriverManager().install())
     options = Options()
     options.add_experimental_option('detach', True)
