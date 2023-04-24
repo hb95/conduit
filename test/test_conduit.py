@@ -63,6 +63,7 @@ class TestConduit:
         self.registration(TEST_DATA_REGANDLOGIN_POS)
         self.page.refresh()
         self.login(TEST_DATA_REGANDLOGIN_POS)
+        time.sleep(1)
         assert self.page.link_profile(TEST_DATA_REGANDLOGIN_POS['username'])
 
     @allure.id('TC6')
