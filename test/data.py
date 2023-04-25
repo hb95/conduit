@@ -1,6 +1,6 @@
 TEST_DATA_REGANDLOGIN_POS = {
     'username': 'albert08',
-    'email': 'almodo.albert@albert.com',
+    'email': 'almodo.albert@albert.hu',
     'password': 'pontY738'
 }
 
