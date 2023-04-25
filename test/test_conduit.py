@@ -48,7 +48,7 @@ class TestConduit:
     @allure.id('TC3')
     @allure.title('Regisztráció - Helyes felhasználói adatokkal')
     def test_registration_pos(self):
-        self.registration(TEST_DATA_REG_POS)
+        self.registration(TEST_DATA_REGANDLOGIN_POS)
         assert self.page.message_reg_login('Your registration was successful!')
 
     @allure.id('TC4')
@@ -60,10 +60,8 @@ class TestConduit:
     @allure.id('TC5')
     @allure.title('Bejelentkezés - Helyes felhasználói adatokkal')
     def test_login_pos(self):
-        # self.registration(TEST_DATA_REG_POS)
-        # self.page.refresh()
-        self.login(TEST_DATA_REG_POS)
-        assert self.page.link_profile(TEST_DATA_REG_POS['username'])
+        self.login(TEST_DATA_REGANDLOGIN_POS)
+        assert self.page.link_profile(TEST_DATA_REGANDLOGIN_POS['username'])
 
     @allure.id('TC6')
     @allure.title('Bejelentkezés - Helytelen felhasználói adatokkal')
@@ -74,14 +72,14 @@ class TestConduit:
     @allure.id('TC7')
     @allure.title('Kijelentkezés')
     def test_logout(self):
-        self.login(TEST_DATA_REG_POS)
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.link_logout().click()
         assert self.page.link_logout() is None
 
     @allure.id('TC8')
     @allure.title('Posztok listázása')
     def test_list(self):
-        self.login(TEST_DATA_REG_POS)
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.link_yourfeed().click()
         list_posts = self.page.links_posts()
         assert len(list_posts) > 0
@@ -89,7 +87,7 @@ class TestConduit:
     @allure.id('TC9')
     @allure.title('Több oldalas lista bejárása')
     def test_list_multipage(self):
-        self.login(TEST_DATA_REG_POS)
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         list_pages = self.page.links_pages()
 
         for i, page in enumerate(list_pages):
@@ -99,7 +97,7 @@ class TestConduit:
     @allure.id('TC10')
     @allure.title('Új poszt közzététele')
     def test_post_new(self):
-        self.login(TEST_DATA_REG_POS)
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.link_new_post().click()
         title = self.page.input_given_placeholder('Article Title')
         topic = self.page.input_given_placeholder("What's this article about?")
@@ -120,7 +118,7 @@ class TestConduit:
     @allure.id('TC11')
     @allure.title('Kommentelés sorozatos adatbeolvasással')
     def test_comments_from_file(self):
-        self.login(TEST_DATA_REG_POS)
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.links_posts()[0].click()
 
         with open('test/poem.txt', 'r', encoding='UTF-8') as comment_file:
@@ -134,7 +132,7 @@ class TestConduit:
     @allure.id('TC12')
     @allure.title('Komment törlése')
     def test_delete_comment(self):
-        self.login(TEST_DATA_REG_POS)
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.links_posts()[0].click()
 
         # első komment szövegének kinyerése
@@ -147,7 +145,7 @@ class TestConduit:
     @allure.id('TC13')
     @allure.title('Felhasználónév módosítása')
     def test_edit_username(self):
-        self.login(TEST_DATA_REG_POS)
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         self.page.link_settings().click()
         username_field = self.page.input_username_setting()
         username_field.clear()
@@ -159,7 +157,7 @@ class TestConduit:
     @allure.id('TC14')
     @allure.title('Adatok exportálása')
     def test_export_titles(self):
-        self.login(TEST_DATA_REG_POS)
+        self.login(TEST_DATA_REGANDLOGIN_POS)
         titles = [element.text for element in self.page.h1_post_titles()]
 
         with open('post_titles.txt', 'w', encoding='UTF-8') as titles_file:

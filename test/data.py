@@ -1,12 +1,6 @@
-TEST_DATA_REG_POS = {
-    'username': 'albert08',
-    'email': 'almodo.albert@albert.gb',
-    'password': 'pontY738'
-}
-
 TEST_DATA_REGANDLOGIN_POS = {
     'username': 'albert08',
-    'email': 'almodo.albert@albert.hr',
+    'email': 'almodo.albert@albert.gb',
     'password': 'pontY738'
 }
 
