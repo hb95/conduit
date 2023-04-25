@@ -9,7 +9,7 @@ from selenium.webdriver.common.keys import Keys
 
 class TestConduit:
     def setup_method(self):
-        #self.page = ConduitPage(set_chrome_driver_in_window())
+        # self.page = ConduitPage(set_chrome_driver_in_window())
         self.page = ConduitPage(set_chrome_driver_headless())
         self.page.open()
         self.page.maximize()
@@ -60,8 +60,8 @@ class TestConduit:
     @allure.id('TC5')
     @allure.title('Bejelentkezés - Helyes felhasználói adatokkal')
     def test_login_pos(self):
-        #self.registration(TEST_DATA_REGANDLOGIN_POS)
-        #self.page.refresh()
+        # self.registration(TEST_DATA_REGANDLOGIN_POS)
+        # self.page.refresh()
         self.login(TEST_DATA_REG_POS)
         assert self.page.link_profile(TEST_DATA_REGANDLOGIN_POS['username'])
 
