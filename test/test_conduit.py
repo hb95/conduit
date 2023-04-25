@@ -63,7 +63,8 @@ class TestConduit:
         # self.registration(TEST_DATA_REGANDLOGIN_POS)
         # self.page.refresh()
         self.login(TEST_DATA_REG_POS)
-        assert self.page.link_profile(TEST_DATA_REGANDLOGIN_POS['username'])
+        #assert self.page.link_profile(TEST_DATA_REGANDLOGIN_POS['username'])
+        assert self.page.link_profile(TEST_DATA_REG_POS['username'])
 
     @allure.id('TC6')
     @allure.title('Bejelentkezés - Helytelen felhasználói adatokkal')
