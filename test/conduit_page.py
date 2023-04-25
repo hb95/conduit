@@ -58,7 +58,7 @@ class ConduitPage(GeneralPage):
     def link_profile(self, username):
         try:
             return WebDriverWait(self.browser, 5).until(
-                EC.presence_of_element_located((By.XPATH, f'//a[@href="#/@{username}/"]')))
+                EC.presence_of_element_located((By.XPATH, f'//li[@class="nav-item"]/a[@href="#/@{username}/"]')))
         except TimeoutException:
             return None
 

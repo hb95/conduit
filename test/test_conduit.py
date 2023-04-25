@@ -9,7 +9,7 @@ from selenium.webdriver.common.keys import Keys
 
 class TestConduit:
     def setup_method(self):
-        # self.page = ConduitPage(set_chrome_driver_in_window())
+        #self.page = ConduitPage(set_chrome_driver_in_window())
         self.page = ConduitPage(set_chrome_driver_headless())
         self.page.open()
         self.page.maximize()
